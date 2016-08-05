@@ -1,5 +1,6 @@
 # dotnative
-Experiments with dotnet
 
-  dotnet restore
-  dotnet run
+Experiments with dotnet, specifically invoking native libs and JNI
+
+    $ dotnet restore
+    $ dotnet run
