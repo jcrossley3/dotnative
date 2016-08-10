@@ -39,14 +39,14 @@ namespace JNI
     }
 
     // Invocation API
-    [StructLayout(LayoutKind.Sequential), NativeCppClass]
+    [StructLayout(LayoutKind.Sequential)]
     public struct JavaVMOption
     {
         public IntPtr optionString;
         public IntPtr extraInfo;
     }
 
-    [StructLayout(LayoutKind.Sequential), NativeCppClass]
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe struct JavaVMInitArgs
     {
         public int version;

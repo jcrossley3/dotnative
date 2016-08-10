@@ -5,10 +5,9 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
-using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
 using System.Security;
+using System.Runtime.CompilerServices;
+using System.Runtime;
 using Microsoft.Win32;
 
 
@@ -32,29 +31,24 @@ namespace JNI
         public struct JNIInvokeInterface_
         {            
             [UnmanagedFunctionPointer(JavaVM.CC)]
-            [SuppressUnmanagedCodeSecurity]
             internal delegate int DestroyJavaVM(IntPtr pVM);
 
             [UnmanagedFunctionPointer(JavaVM.CC)]
-            [SuppressUnmanagedCodeSecurity]
             internal delegate int AttachCurrentThread(IntPtr pVM, out IntPtr pEnv, JavaVMInitArgs* Args);
 
             [UnmanagedFunctionPointer(JavaVM.CC)]
-            [SuppressUnmanagedCodeSecurity]
             internal delegate int DetachCurrentThread(IntPtr pVM);
 
             [UnmanagedFunctionPointer(JavaVM.CC)]
-            [SuppressUnmanagedCodeSecurity]
             internal delegate int GetEnv(IntPtr pVM, out IntPtr pEnv, int Version);
             // J2SDK1_4
             [UnmanagedFunctionPointer(JavaVM.CC)]
-            [SuppressUnmanagedCodeSecurity]
             internal delegate int AttachCurrentThreadAsDaemon(IntPtr pVM, out IntPtr pEnv, JavaVMInitArgs* Args);
         }
 
         // Have a structure that mimic the same structure of all the methods and offsets of each of the methods
         // in the JavaVM structure in the DLL
-        [StructLayout(LayoutKind.Sequential), NativeCppClass]
+        [StructLayout(LayoutKind.Sequential)]
         public struct JNIInvokeInterface
         {
             public IntPtr reserved0;
@@ -68,7 +62,7 @@ namespace JNI
             public IntPtr AttachCurrentThreadAsDaemon;
         }
 
-        [StructLayout(LayoutKind.Sequential, Size = 4), NativeCppClass]
+        [StructLayout(LayoutKind.Sequential, Size = 4)]
         private struct JNIInvokeInterfacePtr
         {
             public readonly JNIInvokeInterface* functions;
@@ -129,8 +123,6 @@ namespace JNI
         }
 
         // This is only available in JNI_VERSION_1_4 or higher.
-        [SuppressUnmanagedCodeSecurity]
-        [ReliabilityContract(Consistency.WillNotCorruptState, Cer.Success)]
         public int AttachCurrentThreadAsDaemon(out JNIEnv penv, JavaVMInitArgs? args)
         {
             if (_attachCurrentThreadAsDaemon == null)

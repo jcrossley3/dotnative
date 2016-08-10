@@ -13,7 +13,7 @@ using System.Reflection;
 using System.Text;
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
+using System.Security;
 
 namespace JNI
 {
@@ -32,10 +32,10 @@ namespace JNI
         public void LoadVM(Dictionary<string, string> options, bool AddToExistingJVM)
         {
             // Get the location of the current version of the JVM.dll          
-            string jreVersion = (string) Registry.GetValue(JRE_REGISTRY_KEY, "CurrentVersion", null);
+            string jreVersion = "1.8.0_91";
             string keyName = Path.Combine(JRE_REGISTRY_KEY, jreVersion);
 
-            string jvmDir = (string) Registry.GetValue(keyName, "RuntimeLib", null);
+            string jvmDir = "/usr/java/default/jre/lib/amd64/server";
 
             if ((jvmDir.Length == 0) || (!File.Exists(jvmDir)))
                 throw new Exception("Error determining the location of the Java Runtime Environment");
@@ -192,13 +192,14 @@ namespace JNI
                 {
                     retval[i] = new JValue();
                     FieldInfo paramField = retval[i].GetType().GetFields(BindingFlags.Public | BindingFlags.Instance).AsQueryable().FirstOrDefault(a => a.Name.ToUpper().Equals(paramSig));
-                    if ((paramField != null) && ((param[i].GetType() == paramField.FieldType) || ((paramField.FieldType == typeof(bool)) && (param[i] is byte))))
-                    {
-                        paramField.SetValueDirect(__makeref(retval[i]),paramField.FieldType == typeof (bool)  // this is an undocumented feature to set struct fields via reflection
-                                                      ? JavaVM.BooleanToByte((bool)param[i])
-                                                      : param[i]);
-                    }
-                    else throw new Exception("Signature (" + paramSig + ") does not match parameter value (" + param[i].GetType().ToString() + ")."); 
+                    // if ((paramField != null) && ((param[i].GetType() == paramField.FieldType) || ((paramField.FieldType == typeof(bool)) && (param[i] is byte))))
+                    // {
+                    //     paramField.SetValueDirect(__makeref(retval[i]),paramField.FieldType == typeof (bool)  // this is an undocumented feature to set struct fields via reflection
+                    //                                   ? JavaVM.BooleanToByte((bool)param[i])
+                    //                                   : param[i]);
+                    // }
+                    // else
+                        throw new Exception("Signature (" + paramSig + ") does not match parameter value (" + param[i].GetType().ToString() + ")."); 
                 }                                                 
             }
             return retval;

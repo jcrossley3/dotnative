@@ -4,12 +4,10 @@
     
 using System;
 using System.Diagnostics;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Reflection;
-using System.Security.Permissions;
 
 
 namespace JNI
@@ -1994,11 +1992,9 @@ namespace JNI
                                              IntPtr buf, int len);
 
         [UnmanagedFunctionPointer(JavaVM.CC)]
-        [SuppressUnmanagedCodeSecurity]
         internal delegate void DeleteGlobalRef(IntPtr EnvironmentHandle, IntPtr gref);
 
         [UnmanagedFunctionPointer(JavaVM.CC)]
-        [SuppressUnmanagedCodeSecurity]
         internal delegate void DeleteLocalRef(IntPtr EnvironmentHandle, IntPtr lref);
 
         [UnmanagedFunctionPointer(JavaVM.CC)]
@@ -2238,7 +2234,6 @@ namespace JNI
         internal delegate IntPtr NewFloatArray(IntPtr EnvironmentHandle, int len);
 
         [UnmanagedFunctionPointer(JavaVM.CC)]
-        [SuppressUnmanagedCodeSecurity]
         internal delegate IntPtr NewGlobalRef(IntPtr EnvironmentHandle, IntPtr lobj);
 
         [UnmanagedFunctionPointer(JavaVM.CC)]
