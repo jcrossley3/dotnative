@@ -35,7 +35,7 @@ namespace JNI
             string jreVersion = "1.8.0_91";
             string keyName = Path.Combine(JRE_REGISTRY_KEY, jreVersion);
 
-            string jvmDir = "/usr/java/default/jre/lib/amd64/server";
+            string jvmDir = "/usr/java/default/jre/lib/amd64/server/libjvm.so";
 
             if ((jvmDir.Length == 0) || (!File.Exists(jvmDir)))
                 throw new Exception("Error determining the location of the Java Runtime Environment");

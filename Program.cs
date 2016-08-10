@@ -1,17 +1,21 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using JNI;
+
 
 namespace ConsoleApplication
 {
     public class Program
     {
-        [DllImport("libc.so.6")]
-        private static extern int getpid();
-
         public static void Main(string[] args)
         {
-            int pid = getpid();
-            Console.WriteLine("pid=" + pid);
+            Dictionary<string, string> jvmParams = new Dictionary<string, string>();
+            JavaNativeInterface Java = new JavaNativeInterface();
+
+            Java.LoadVM(jvmParams, false);
+            Java.InstantiateJavaObject("Ljava/util/Random;");
+            int x = Java.CallMethod<int>("nextInt", "()I", new List<object>());
+            Console.WriteLine("x=" + x);
         }
     }
 }

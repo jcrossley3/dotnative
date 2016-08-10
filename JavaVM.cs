@@ -15,13 +15,13 @@ namespace JNI
 {
     public unsafe class JavaVM : IDisposable
     {
-        [DllImport("jvm.dll", CallingConvention = JavaVM.CC)]
+        [DllImport("/usr/java/default/jre/lib/amd64/server/libjvm.so", CallingConvention = JavaVM.CC)]
         internal static extern int JNI_CreateJavaVM(out IntPtr pVM, out IntPtr pEnv, JavaVMInitArgs* Args);
 
-        [DllImport("jvm.dll", CallingConvention = JavaVM.CC)]
+        [DllImport("/usr/java/default/jre/lib/amd64/server/libjvm.so", CallingConvention = JavaVM.CC)]
         internal static extern int JNI_GetDefaultJavaVMInitArgs(JavaVMInitArgs* args);
 
-        [DllImport("jvm.dll", CallingConvention = JavaVM.CC)]
+        [DllImport("/usr/java/default/jre/lib/amd64/server/libjvm.so", CallingConvention = JavaVM.CC)]
         internal static extern int JNI_GetCreatedJavaVMs(out IntPtr pVM, int jSize1, [Out] out int jSize2);
 
 
