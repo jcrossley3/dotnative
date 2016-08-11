@@ -264,6 +264,14 @@ namespace JNI
             return new JValue() { l = arrPointer };
         }
 
+        public T CallMethod<T>(string className, IntPtr instance, string methodName, string sig, List<object> param)
+        {
+            javaClassName = className;
+            javaClass = env.FindClass(javaClassName);
+            javaObject = instance;
+            return CallMethod<T>(methodName, sig, param);
+        }
+        
         public T CallMethod<T>(string methodName, string sig, List<object> param)
         {
             IntPtr methodId = env.GetMethodId(javaClass, methodName, sig);
