@@ -329,7 +329,7 @@ namespace JNI
                 else if (typeof(T) == typeof(byte[]))
                 {
                     // Call the byte method
-                    IntPtr jobj = env.CallStaticObjectMethod(javaObject, methodId, ParseParameters(sig, param));
+                    IntPtr jobj = env.CallObjectMethod(javaObject, methodId, ParseParameters(sig, param));
                     if (jobj == IntPtr.Zero)
                     {
                         return default(T);
@@ -374,6 +374,127 @@ namespace JNI
                 {
                     // Call the object method and deal with whatever comes back in the call code 
                     IntPtr res = env.CallObjectMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T)(object)res;
+                }
+                return default(T);
+            }
+            catch
+            {
+                throw new Exception(env.CatchJavaException());
+            }
+        }
+
+        public T CallStaticMethod<T>(string className, string methodName, string sig, List<object> param)
+        {
+            IntPtr javaObject = env.FindClass(className);
+            IntPtr methodId = env.GetStaticMethodID(javaObject, methodName, sig);
+            try
+            {
+                if (typeof (T) == typeof (byte))
+                {
+                    // Call the byte method 
+                    byte res = env.CallStaticByteMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                else if (typeof (T) == typeof (bool))
+                {
+                    // Call the boolean method 
+                    bool res = env.CallStaticBooleanMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                if (typeof (T) == typeof (char))
+                {
+                    // Call the char method 
+                    char res = env.CallStaticCharMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                else if (typeof (T) == typeof (short))
+                {
+                    // Call the short method 
+                    short res = env.CallStaticShortMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                else if (typeof (T) == typeof (int))
+                {
+                    // Call the int method               
+                    int res = env.CallStaticIntMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                else if (typeof (T) == typeof (long))
+                {
+                    // Call the long method 
+                    long res = env.CallStaticLongMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                else if (typeof (T) == typeof (float))
+                {
+                    // Call the float method 
+                    float res = env.CallStaticFloatMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res;
+                }
+                else if (typeof (T) == typeof (double))
+                {
+                    // Call the double method 
+                    double res = env.CallStaticDoubleMethod(javaObject, methodId, ParseParameters(sig, param));
+                    return (T) (object) res; // need to fix this
+                }
+                else if (typeof (T) == typeof (string))
+                {
+                    // Call the string method 
+                    IntPtr jstr = env.CallStaticObjectMethod(javaObject, methodId, ParseParameters(sig, param));
+
+                    string res = env.JStringToString(jstr);
+                    env.DeleteLocalRef(jstr);
+                    return (T) (object) res;
+                }
+                else if (typeof(T) == typeof(byte[]))
+                {
+                    // Call the byte method
+                    IntPtr jobj = env.CallStaticObjectMethod(javaObject, methodId, ParseParameters(sig, param));
+                    if (jobj == IntPtr.Zero)
+                    {
+                        return default(T);
+                    }
+                    byte[] res = env.JStringToByte(jobj);
+                    env.DeleteLocalRef(jobj);
+                    return (T)(object)res;
+                }
+                else if (typeof(T) == typeof(string[]))
+                {
+                    // Call the string array method
+                    IntPtr jobj = env.CallStaticObjectMethod(javaObject, methodId, ParseParameters(sig, param));
+                    if (jobj == IntPtr.Zero)
+                    {
+                        return default(T);
+                    }
+
+                    IntPtr[] objArray = env.GetObjectArray(jobj);
+                    string[] res = new string[objArray.Length];
+
+                    for (int i=0; i < objArray.Length; i++)
+                    {
+                        res[i] = env.JStringToString(objArray[i]);                        
+                    }
+
+                    env.DeleteLocalRef(jobj);
+                    return (T)(object)res;
+                }
+                else if (typeof(T) == typeof(int[]))
+                {
+                    // Call the int array method
+                    IntPtr jobj = env.CallStaticObjectMethod(javaObject, methodId, ParseParameters(sig, param));
+                    if (jobj == IntPtr.Zero)
+                    {
+                        return default(T);
+                    }
+                    int[] res = env.GetIntArray(jobj);
+                    env.DeleteLocalRef(jobj);
+                    return (T)(object)res;
+                }
+                else if (typeof(T) == typeof(IntPtr))
+                {
+                    // Call the object method and deal with whatever comes back in the call code 
+                    IntPtr res = env.CallStaticObjectMethod(javaObject, methodId, ParseParameters(sig, param));
                     return (T)(object)res;
                 }
                 return default(T);
