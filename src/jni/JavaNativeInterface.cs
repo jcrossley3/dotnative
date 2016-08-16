@@ -10,10 +10,8 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using Microsoft.Win32;
 using System.Runtime.InteropServices;
-using System.Security;
+
 
 namespace JNI
 {
@@ -34,15 +32,6 @@ namespace JNI
             // Get the location of the current version of the JVM.dll          
             string jreVersion = "1.8.0_91";
             string keyName = Path.Combine(JRE_REGISTRY_KEY, jreVersion);
-
-            string jvmDir = "/usr/java/default/jre/lib/amd64/server/libjvm.so";
-
-            if ((jvmDir.Length == 0) || (!File.Exists(jvmDir)))
-                throw new Exception("Error determining the location of the Java Runtime Environment");
-
-            // Set the directory to the location of the JVM.dll. 
-            // This will ensure that the API call JNI_CreateJavaVM will work
-            Directory.SetCurrentDirectory(Path.GetDirectoryName(jvmDir));
 
             var args = new JavaVMInitArgs();
 
