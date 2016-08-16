@@ -63,7 +63,7 @@ namespace JNI
             {
                 throw new Exception("Can't find type " + type.Name + "." + clrName);
             }
-            return JNINativeMethod.CreateNativeMethod(javaName, javaSignature, Marshal.GetFunctionPointerForDelegate(methodInfo.CreateDelegate(GetDelegateType(methodInfo), methodInfo)));
+            return JNINativeMethod.CreateNativeMethod(javaName, javaSignature, Marshal.GetFunctionPointerForDelegate<Delegate>(methodInfo.CreateDelegate(GetDelegateType(methodInfo), methodInfo)));
         }
 
 
@@ -76,7 +76,7 @@ namespace JNI
                 {
                    string signature = GetDelegateSignature(methodInfo);
                    Entries.Add(JNINativeMethod.CreateNativeMethod(methodInfo.Name, signature, 
-                                       Marshal.GetFunctionPointerForDelegate(methodInfo.CreateDelegate(GetDelegateType(methodInfo), methodInfo))));
+                                       Marshal.GetFunctionPointerForDelegate<Delegate>(methodInfo.CreateDelegate(GetDelegateType(methodInfo), methodInfo))));
                 }
             }
         }

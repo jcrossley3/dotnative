@@ -92,7 +92,7 @@ namespace JNI
 
         public static void GetDelegateForFunctionPointer<T>(IntPtr ptr, ref T res)
         {  // Converts an unmanaged function pointer to a delegate.
-            res = (T)(object)Marshal.GetDelegateForFunctionPointer(ptr, typeof(T));
+            res = (T)(object)Marshal.GetDelegateForFunctionPointer<T>(ptr);
         }
 
         internal int AttachCurrentThread(out JNIEnv penv, JavaVMInitArgs? args)

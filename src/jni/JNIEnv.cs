@@ -1360,8 +1360,8 @@ namespace JNI
         internal void PackPrimitiveArray<T>(T[] sourceArray, IntPtr pointerToArray)
         {
             byte isCopy = 0;
-            byte[] byteArray = new byte[sourceArray.Length*Marshal.SizeOf(typeof (T))];
-            Buffer.BlockCopy(sourceArray, 0, byteArray, 0, sourceArray.Length*Marshal.SizeOf(typeof (T)));
+            byte[] byteArray = new byte[sourceArray.Length*Marshal.SizeOf<T>()];
+            Buffer.BlockCopy(sourceArray, 0, byteArray, 0, sourceArray.Length*Marshal.SizeOf<T>());
             byte* pb = (byte*) this.GetPrimitiveArrayCritical(pointerToArray, &isCopy);
             if (pb == null)
             {
@@ -1369,7 +1369,7 @@ namespace JNI
             }
             try
             {
-                Marshal.Copy(byteArray, 0, (new IntPtr(pb)), sourceArray.Length*Marshal.SizeOf(typeof (T)));
+                Marshal.Copy(byteArray, 0, (new IntPtr(pb)), sourceArray.Length*Marshal.SizeOf<T>());
             }
             finally
             {
@@ -1414,16 +1414,6 @@ namespace JNI
         private JNINativeInterface_.CallLongMethod callLongMethod;
         private JNINativeInterface_.CallVoidMethod callVoidMethod;
 
-        private JNINativeInterface_.CallNonvirtualBooleanMethod callNonvirtualBooleanMethod;
-        private JNINativeInterface_.CallNonvirtualByteMethod callNonvirtualByteMethod;
-        private JNINativeInterface_.CallNonvirtualCharMethod callNonvirtualCharMethod;
-        private JNINativeInterface_.CallNonvirtualDoubleMethod callNonvirtualDoubleMethod;
-        private JNINativeInterface_.CallNonvirtualFloatMethod callNonvirtualFloatMethod;
-        private JNINativeInterface_.CallNonvirtualIntMethod callNonvirtualIntMethod;
-        private JNINativeInterface_.CallNonvirtualLongMethod callNonvirtualLongMethod;
-        private JNINativeInterface_.CallNonvirtualObjectMethod callNonvirtualObjectMethod;
-        private JNINativeInterface_.CallNonvirtualShortMethod callNonvirtualShortMethod;
-        private JNINativeInterface_.CallNonvirtualVoidMethod callNonvirtualVoidMethod;
         private JNINativeInterface_.CallObjectMethod callObjectMethod;
         private JNINativeInterface_.CallShortMethod callShortMethod;
         private JNINativeInterface_.CallStaticBooleanMethod callStaticBooleanMethod;
@@ -1437,10 +1427,8 @@ namespace JNI
         private JNINativeInterface_.CallStaticShortMethod callStaticShortMethod;
         private JNINativeInterface_.CallStaticVoidMethod callStaticVoidMethod;
         
-        private JNINativeInterface_.DefineClass defineClass;
         private JNINativeInterface_.DeleteGlobalRef deleteGlobalRef;
         private JNINativeInterface_.DeleteLocalRef deleteLocalRef;
-        private JNINativeInterface_.DeleteWeakGlobalRef deleteWeakGlobalRef;
         private JNINativeInterface_.EnsureLocalCapacity ensureLocalCapacity;
         private JNINativeInterface_.ExceptionCheck exceptionCheck;
         private JNINativeInterface_.ExceptionClear exceptionClear;
@@ -1451,38 +1439,24 @@ namespace JNI
         private JNINativeInterface_.FromReflectedField fromReflectedField;
         private JNINativeInterface_.FromReflectedMethod fromReflectedMethod;
         private JNINativeInterface_.GetArrayLength getArrayLength;
-        private JNINativeInterface_.GetBooleanArrayElements getBooleanArrayElements;
-        private JNINativeInterface_.GetBooleanArrayRegion getBooleanArrayRegion;
         private JNINativeInterface_.GetBooleanField getBooleanField;
         private JNINativeInterface_.GetByteArrayElements getByteArrayElements;
-        private JNINativeInterface_.GetByteArrayRegion getByteArrayRegion;
         private JNINativeInterface_.GetByteField getByteField;
-        private JNINativeInterface_.GetCharArrayElements getCharArrayElements;
-        private JNINativeInterface_.GetCharArrayRegion getCharArrayRegion;
         private JNINativeInterface_.GetCharField getCharField;
         private JNINativeInterface_.GetDirectBufferAddress getDirectBufferAddress;
         private JNINativeInterface_.GetDirectBufferCapacity getDirectBufferCapacity;
-        private JNINativeInterface_.GetDoubleArrayElements getDoubleArrayElements;
-        private JNINativeInterface_.GetDoubleArrayRegion getDoubleArrayRegion;
         private JNINativeInterface_.GetDoubleField getDoubleField;
         private JNINativeInterface_.GetFieldID getFieldID;
-        private JNINativeInterface_.GetFloatArrayElements getFloatArrayElements;
-        private JNINativeInterface_.GetFloatArrayRegion getFloatArrayRegion;
         private JNINativeInterface_.GetFloatField getFloatField;
         private JNINativeInterface_.GetIntArrayElements getIntArrayElements;
-        private JNINativeInterface_.GetIntArrayRegion getIntArrayRegion;
         private JNINativeInterface_.GetIntField getIntField;
         private JNINativeInterface_.GetJavaVM getJavaVM;
-        private JNINativeInterface_.GetLongArrayElements getLongArrayElements;
-        private JNINativeInterface_.GetLongArrayRegion getLongArrayRegion;
         private JNINativeInterface_.GetLongField getLongField;
         private JNINativeInterface_.GetMethodId getMethodId;
         private JNINativeInterface_.GetObjectArrayElement getObjectArrayElement;
         private JNINativeInterface_.GetObjectClass getObjectClass;
         private JNINativeInterface_.GetObjectField getObjectField;
         private JNINativeInterface_.GetPrimitiveArrayCritical getPrimitiveArrayCritical;
-        private JNINativeInterface_.GetShortArrayElements getShortArrayElements;
-        private JNINativeInterface_.GetShortArrayRegion getShortArrayRegion;
         private JNINativeInterface_.GetShortField getShortField;
         private JNINativeInterface_.GetStaticBooleanField getStaticBooleanField;
         private JNINativeInterface_.GetStaticByteField getStaticByteField;
@@ -1496,19 +1470,9 @@ namespace JNI
         private JNINativeInterface_.GetStaticObjectField getStaticObjectField;
         private JNINativeInterface_.GetStaticShortField getStaticShortField;
         private JNINativeInterface_.GetStringChars getStringChars;
-        private JNINativeInterface_.GetStringCritical getStringCritical;
-        private JNINativeInterface_.GetStringLength getStringLength;
-        private JNINativeInterface_.GetStringRegion getStringRegion;
-        private JNINativeInterface_.GetStringUTFChars getStringUTFChars;
-        private JNINativeInterface_.GetStringUTFLength getStringUTFLength;
-        private JNINativeInterface_.GetStringUTFRegion getStringUTFRegion;
         private JNINativeInterface_.GetSuperclass getSuperClass;
         private JNINativeInterface_.GetVersion getVersion;
         private JNINativeInterface_.IsAssignableFrom isAssignableFrom;
-        private JNINativeInterface_.IsSameObject isSameObject;
-        private JNINativeInterface_.MonitorEnter monitorEnter;
-        private JNINativeInterface_.MonitorExit monitorExit;
-        private JNINativeInterface_.NewBooleanArray newBooleanArray;
         private JNINativeInterface_.NewByteArray newByteArray;
         private JNINativeInterface_.NewCharArray newCharArray;
         private JNINativeInterface_.NewDirectByteBuffer newDirectByteBuffer;
@@ -1523,40 +1487,22 @@ namespace JNI
         private JNINativeInterface_.NewShortArray newShortArray;
         private JNINativeInterface_.NewString newString;
         private JNINativeInterface_.NewStringUTF newStringUTF;
-        private JNINativeInterface_.NewWeakGlobalRef newWeakGlobalRef;
         private JNINativeInterface_.PopLocalFrame popLocalFrame;
         private JNINativeInterface_.PushLocalFrame pushLocalFrame;
         private JNINativeInterface_.RegisterNatives registerNatives;
         private JNINativeInterface_.UnregisterNatives unregisterNatives;
-        private JNINativeInterface_.ReleaseBooleanArrayElements releaseBooleanArrayElements;
-        private JNINativeInterface_.ReleaseByteArrayElements releaseByteArrayElements;
-        private JNINativeInterface_.ReleaseCharArrayElements releaseCharArrayElements;
-        private JNINativeInterface_.ReleaseDoubleArrayElements releaseDoubleArrayElements;
-        private JNINativeInterface_.ReleaseFloatArrayElements releaseFloatArrayElements;
         private JNINativeInterface_.ReleaseIntArrayElements releaseIntArrayElements;
-        private JNINativeInterface_.ReleaseLongArrayElements releaseLongArrayElements;
         private JNINativeInterface_.ReleasePrimitiveArrayCritical releasePrimitiveArrayCritical;
-        private JNINativeInterface_.ReleaseShortArrayElements releaseShortArrayElements;
         private JNINativeInterface_.ReleaseStringChars releaseStringChars;
-        private JNINativeInterface_.ReleaseStringCritical releaseStringCritical;
-        private JNINativeInterface_.ReleaseStringUTFChars releaseStringUTFChars;
-        private JNINativeInterface_.SetBooleanArrayRegion setBooleanArrayRegion;
         private JNINativeInterface_.SetBooleanField setBooleanField;
-        private JNINativeInterface_.SetByteArrayRegion setByteArrayRegion;
         private JNINativeInterface_.SetByteField setByteField;
-        private JNINativeInterface_.SetCharArrayRegion setCharArrayRegion;
         private JNINativeInterface_.SetCharField setCharField;
-        private JNINativeInterface_.SetDoubleArrayRegion setDoubleArrayRegion;
         private JNINativeInterface_.SetDoubleField setDoubleField;
-        private JNINativeInterface_.SetFloatArrayRegion setFloatArrayRegion;
         private JNINativeInterface_.SetFloatField setFloatField;
-        private JNINativeInterface_.SetIntArrayRegion setIntArrayRegion;
         private JNINativeInterface_.SetIntField setIntField;
-        private JNINativeInterface_.SetLongArrayRegion setLongArrayRegion;
         private JNINativeInterface_.SetLongField setLongField;
         private JNINativeInterface_.SetObjectArrayElement setObjectArrayElement;
         private JNINativeInterface_.SetObjectField setObjectField;
-        private JNINativeInterface_.SetShortArrayRegion setShortArrayRegion;
         private JNINativeInterface_.SetShortField setShortField;
         private JNINativeInterface_.SetStaticBooleanField setStaticBooleanField;
         private JNINativeInterface_.SetStaticByteField setStaticByteField;
@@ -1574,6 +1520,8 @@ namespace JNI
 
 
         #endregion
+
+        #pragma warning disable 0649
         private struct JNINativeInterfacePtr
         {
             public JNINativeInterface* functions;
