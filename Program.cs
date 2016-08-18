@@ -21,6 +21,7 @@ namespace ConsoleApplication
             Java.CallVoidMethod("begin", "()V", new List<object>());
             name = Java.CallMethod<string>("toString", "()Ljava/lang/String;", new List<object>());
             Console.WriteLine("tm=" + name);
+            Java.Dispose();     // clean up unmanaged references
         }
     }
 }

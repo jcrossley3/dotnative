@@ -189,7 +189,8 @@ namespace JNI
         {
             if (_jvm != IntPtr.Zero)
             {
-                Marshal.FreeCoTaskMem(_jvm);
+                DetachCurrentThread();
+                DestroyJavaVM();
                 _jvm = IntPtr.Zero;
             }           
         }

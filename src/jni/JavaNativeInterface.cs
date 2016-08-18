@@ -29,28 +29,8 @@ namespace JNI
 
         public void LoadVM(Dictionary<string, string> options, bool AddToExistingJVM)
         {
-            // Get the location of the current version of the JVM.dll          
-            string jreVersion = "1.8.0_91";
-            string keyName = Path.Combine(JRE_REGISTRY_KEY, jreVersion);
-
             var args = new JavaVMInitArgs();
-
-            switch (Convert.ToInt32((decimal.Parse(jreVersion.Substring(0, 3)) - 1)/2*10))
-            {
-                case 0:
-                    throw new Exception("Unsupported java version. Please upgrade your version of the JRE.");
-
-                case 1:
-                    args.version = JNIVersion.JNI_VERSION_1_2;
-                    break;
-                case 2:
-                    args.version = JNIVersion.JNI_VERSION_1_4;
-                    break;
-                default:
-                    args.version = JNIVersion.JNI_VERSION_1_6;
-                    break;
-            }
-
+            args.version = JNIVersion.JNI_VERSION_1_6;
             args.ignoreUnrecognized = JavaVM.BooleanToByte(true); // True
 
             if (options.Count > 0)
@@ -537,7 +517,6 @@ namespace JNI
 
             if (disposing)
             {
-                // free managed resources
                 if (jvm != null)
                 {
                     jvm.Dispose();
